@@ -28,9 +28,13 @@ This should lead to a similar situation as shown in Figure 1. Next, we will load
 
 ![Figure 1: Adding a point to the center of the crater.](Fig1_Tut6.png)
 
+**Figure 1: Adding a point to the center of the crater.**
+
 This will result in the situation shown in Figure 2. The newly loaded Shapefile contains information on the position and type of the transportation network of the area. We now assume that our vulcano is in the mood for some chaos and erupts. Due to the magma flow all roads in a distance of 5000 m from the crater get destroyed. To be able to plan restoration measures and support emergency activities, we want to automatically select all roads in a distance of 5000 m from the crater center.
 
 ![Figure 2: Loaded road network layer.](Fig2_Tut6.png)
+
+**Figure 2: Loaded road network layer.**
 
 We will accomplish this, using a spatial selection which is also called a “spatial query”. In QGIS this requires two steps. First, we need to create a buffer around the crater center point, which we have created as first step of this Tutorial. Then we can automatically identify all spatial features of the ““gis.osm_roads_subset” layer that intersect with the buffer polygon.
 
@@ -40,28 +44,42 @@ So as first step,
 
 ![Figure 3: Buffer in red over the road network layer.](Fig3_Tut6.png)
 
+**Figure 3: Buffer in red over the road network layer.**
+
 Next, we will learn two approaches to select all spatial features of the road network that are located within the buffer zone of the crater. For the first option, we will use
 
 **the “select by location” tool. This tool can be found in the toolbox under “Vector selection” -> “Select by Location" as seen in Figure 4.**
 
 ![Figure 4: Opening the “Spatial Query” dialogue.](Fig4_Tut6.png)
 
+**Figure 4: Opening the “Spatial Query” dialogue.**
+
 **this will open up a new dialogue as shown in Figure 5. In the new dialogue, we will parameterize the settings. We have to define the vector file from which we want to select some spatial features – in this case the road network layer – and we have to define the vector file which contains the spatial features which are used to define the area for selecting the spatial features - in our case the 5000 m buffer layer. We also have to define how the two vector files should interact to decide which features get selected. In this case we select “intersect” – this will select all spatial features of the road network layer that intersect with the buffer polygon. Finally, we select “Creating new Selection” to cancel all eventually earlier performed selections within the road network layer. If we now press “Run” we should create a situation as shown in Figure 6. As you can see, all roads located within the buffer are now selected and hence marked with yellow colour.**
 
 ![Figure 5: The “Spatial query” dialogue.](Fig5_Tut6.png)
 
+**Figure 5: The “Spatial query” dialogue.**
+
 ![Figure 6: Situation after performing the spatial query.](Fig6_Tut6.png)
+
+**Figure 6: Situation after performing the spatial query.**
 
 ## 2 Extracting the selected features to a new Shapefile
 Now there are two option to proceed. We could either perform some additional analyses on the selected feature while keeping them in the original Shapefile. Or alternatively, we could store the selected features in a new Shapefile and then continue our analyses with this new layer. We will follow the latter approach here. So, to store the selected features to a new Shapefile, we will
 
 ![Figure 7: Saving the selected features to a new Shapefile.](Fig7_Tut6.png)
 
+**Figure 7: Saving the selected features to a new Shapefile.**
+
 **first close the spatial query dialogue. Then we will perform a right click on the “gis.osm_roads_free_1” layer and from the appearing menu we will select "Export" and then “Save Selected Features As...” (see Figure 7). This will open up a new window as shown in Figure 8. Here, we will define an output name (field marked with “1” in Figure 8 and activate the checkbox “Save only selected features” (if not already activated) to store only the spatial features that have just been selected with the spatial query. After pressing “OK” the new Shapefile will be stored and added to the list of layers. After de-activating the “gis.osm_roads_subset” layer and dragging the newly created layer to the top of the layer window section, you will see a situation as shown in Figure 9.**
 
 ![Figure 8: The “Save As...” dialogue.](Fig8_Tut6.png)
 
+**Figure 8: The “Save As...” dialogue.**
+
 ![Figure 9: Situation after the selected spatial features have been saved to a new Shapefile.](Fig9_Tut6.png)
+
+**Figure 9: Situation after the selected spatial features have been saved to a new Shapefile.**
 
 ## 3 Clipping instead of selecting
 An alternative to the just described work-flow of first selecting the Polygons within the buffer and then to save the selected features as a new Shapefile, is to directly clip-out all spatial features located within the buffer zone. We will now follow this approach by applying the “Clip” tool. We can open the corresponding dialogue by
@@ -72,9 +90,15 @@ Then a new Shapefile will be created. After rearranging the layers a bit and cha
 
 ![Figure 10: Opening the “Clip” tool.](Fig10_Tut6.png)
 
+**Figure 10: Opening the “Clip” tool.**
+
 ![Figure 11: The “Clip” tool dialogue.](Fig11_Tut6.png)
 
+**Figure 11: The “Clip” tool dialogue.**
+
 ![Figure 12: The two extracted subsets of the road network using the buffer Shapefile match perfectly. One of the two subsets is displayed in a wide orange line, and the second subset in a more narrow red line.](Fig12_Tut6.png)
+
+**Figure 12: The two extracted subsets of the road network using the buffer Shapefile match perfectly. One of the two subsets is displayed in a wide orange line, and the second subset in a more narrow red line.**
 
 ## 4 Performing a query on the attribute table
 We have now a Shapefile containing all roads that have been affected by the eruption of the vulcano. Now we would like to have a closer look at the road types that have been affected. To do this, we will first open the attribute table of one of the two Shapefiles containing only the roads located in the buffer zone. We open the attribute table by
@@ -82,6 +106,8 @@ We have now a Shapefile containing all roads that have been affected by the erup
 **performing a right–click on the corresponding layer and selecting “Open attribute table”. This will open the attribute table as shown in Figure 13. The attribute table has 10 columns in total.**
 
 ![Figure 13: The attribute table of the road layer.](Fig13_Tut6.png)
+
+**Figure 13: The attribute table of the road layer.**
 
 Here, we will focus on the column named “fclass” which contains information about the type of road. Let us assume that the type of road is important for estimating the cost to restore the path systems after the eruption of the vulcano as well as to prioritize restoration works.
 
@@ -93,6 +119,8 @@ So let us first create a subset of all “secondary” roads. To do this, we
 
 ![Figure 14: The select features by expression tool.](Fig14_Tut6.png)
 
+**Figure 14: The select features by expression tool.**
+
 As we can see from the results, there is only a single entry in the column “fclass” that belongs to the class “secondary”. This single spatial feature is a roundabout close to lower left border of the buffer zone (see Figure 15). It might be hidden below the outline of the buffer polygon. You can for sure find it, if 
 
 **perform a right-click on the layer with the selected feature and use the "Zoom to Selection" option to zoom the current view to the selected polygon**
@@ -103,7 +131,11 @@ As this is a rather small subset, we will try to additionally select all entries
 
 ![Figure 15: Only a single spatial feature got selected.](Fig15_Tut6.png)
 
+**Figure 15: Only a single spatial feature got selected.**
+
 ![Figure 16: Adapting the selection rule to increase the subset.](Fig16_Tut6.png)
+
+**Figure 16: Adapting the selection rule to increase the subset.**
 
 Now several more roads got selected as can be seen in Figure 17. We can now save this subset by
 
@@ -111,17 +143,25 @@ Now several more roads got selected as can be seen in Figure 17. We can now save
 
 ![Figure 17: Spatial location of all “secondary” and “tertiary” roads within the buffer zone.](Fig17_Tut6.png)
 
+**Figure 17: Spatial location of all “secondary” and “tertiary” roads within the buffer zone.**
+
 As a final step of this Tutorial we will save an additional subset with a slighly more complex rule. To do this, we
 
 **re–open the attribute table of the Shapefile containing the spatial features located in the buffer zone. Then we open the “Select features using an expression” tool as done before. Instead of naming a single class of the “fclass” column we will this time select all classes that contain the text-part “track”. To do this, we will set the rule to “fclass” LIKE ’%track%’ (see Figure 18). The operator “LIKE” can also be found in the “operator” menu as marked with “1” in Figure 18. This operator will search for all entries in the fclass column that contain the text–part “track” and will select it. The “%”–sign is a placeholder for any textparts that can come before or after the text–part ’track’. Then we press “Select”.**
 
 ![Figure 18: Using the “LIKE” operator to construct a more complex selection rule.](Fig18_Tut6.png)
 
+**Figure 18: Using the “LIKE” operator to construct a more complex selection rule.**
+
 With these settings a total of 109 spatial features gets selected (your total number of features might slightly differ depending how your center point for the crater and the corresponding buffer zone was defined). The locations of the selected features are shown in Figure 19. If we open the attribute table and scroll down a bit, we can see that all entries of the flcass column that contain the text–part “track” got selected, including for example the classes “track”, “track_grade1”, “track_grade2” and so on (see Figure 20).
 
 ![Figure 19: Locations of all spatial features containing the text–part “track” in their fclass label.](Fig19_Tut6.png)
 
+**Figure 19: Locations of all spatial features containing the text–part “track” in their fclass label.**
+
 ![Figure 20: All classes containing the text–part “track” got selected in the attribute table.](Fig20_Tut6.png)
+
+**Figure 20: All classes containing the text–part “track” got selected in the attribute table.**
 
 ## 5 Exercise Tutorial 6
 To further practice the just learned skills, you should now complete the following exercises:
