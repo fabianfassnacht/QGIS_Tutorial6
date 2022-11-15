@@ -1,32 +1,30 @@
 # QGIS - Tutorials 
 ## Tutorial 6 - Spatial and semantic selection in QGIS
 
-Fabian Fassnacht
-
-Institute for Geography and Geoecology
-
-KIT—Karlsruhe Institute of Technology
-
-July 17, 2017
 
 **Abstract**
 
-After completing this tutorial you will know how to perform a spatial selection and a selection based on the contents of the attribute table of Shapefiles / vector files. Developed with QGIS version - LAS PALMAS 2.18.9
+After completing this tutorial you will know how to perform a spatial selection and a selection based on the contents of the attribute table of Shapefiles / vector files. Developed with QGIS version - Bialowieza 3.22.5
+
+In this Tutorial we will a new Shapefile named **gis.osm_roads_free_1** that you can download here:
+
+Don't forget to unzip the Shapefile.
+
 
 ## 1 Performing a spatial selection / spatial query
 In this tutorial we will first learn how to perform a spatial selection, which means selecting a subset of spatial features of a vector shapefile based on their location. Then we will learn how we can select spatial features based on information stored in the attribute table.
 
 To start,
 
-**we again load the raster dataset “S2_Neapel_sm2.tif” located in the “Datasets/S2” folder and adapt the visualization settings to have a balanced view of all classes by using the channels R=3, G=2, B=1 and loading new max / min values using the “Style”-tab in the properties window.**
+**we again load the raster dataset “S2_Neapel_sm2.tif” located in the “Datasets/S2” folder and adapt the visualization settings to have a balanced view of all classes by using the channels R=3, G=2, B=1 and loading new max / min values using the “Symbology”-tab in the properties window.**
 
 Following the already known procedures, we will now create an empty Point shapefile by
 
 **selecting the menu “Layer” then “Create Layer” and “New Shapefile Layer”. Be careful to select the correct coordinate reference system and select “Point” as Shapefile Type. Then we will zoom into the area of the vulcano and create a new Point in the just created Point-Shapefile that is located in the center of the vulcano - by now you should already know how to accomplish this. We will then save our edits and stop the editing mode.**
 
-This should lead to a similar situation as shown in Figure 1. Next, we will load the Shapefile “gis.osm roads subset.shp” by
+This should lead to a similar situation as shown in Figure 1. Next, we will load the Shapefile “gis.osm_roads_free_1” by
 
-**starting the dialogue to load a Shapefile (as already learned in Tutorial 2) and then navigating to the folder ”Datasets” and then ”Italy_South_OSM”, selecting the layer and confirm with “open”.**
+**starting the dialogue to load a Shapefile (as already learned in Tutorial 2) and then navigating to the folder where you have saved the file provided above, select the file, and confirm with “open”.**
 
 ![Figure 1: Adding a point to the center of the crater.](Fig1_Tut6.png)
 
@@ -44,11 +42,11 @@ So as first step,
 
 Next, we will learn two approaches to select all spatial features of the road network that are located within the buffer zone of the crater. For the first option, we will use
 
-**the “spatial query” tool. This tool can be found in the main menu in “Vector” -> “Spatial Query” -> “Spatial Query” as seen in Figure 4.**
+**the “select by location” tool. This tool can be found in the toolbox under “Vector selection” -> “Select by Location" as seen in Figure 4.**
 
 ![Figure 4: Opening the “Spatial Query” dialogue.](Fig4_Tut6.png)
 
-**this will open up a new dialogue as shown in Figure 5. In the new dialogue, we will parameterize the settings as shown in Figure 5. We have to define the vector file from which we want to select some spatial features – in this case the road network layer – and we have to define the vector file which contains the spatial features which are used to define the area for selecting the spatial features. We also have to define how the two vector files should interact to decide which features get selected. This is accomplished with the drop–down–menu marked with “1” in Figure 5 where we select “Within” – this will select all spatial features of the road network layer that fall within the buffer polygon. Finally, we select “Create new Selection” to cancel all eventually earlier performed selections within the road network layer. If we now press “Apply” we should create a situation as shown in Figure 6. As you can see, all roads located within the buffer are now selected and hence marked with yellow colour.**
+**this will open up a new dialogue as shown in Figure 5. In the new dialogue, we will parameterize the settings. We have to define the vector file from which we want to select some spatial features – in this case the road network layer – and we have to define the vector file which contains the spatial features which are used to define the area for selecting the spatial features - in our case the 5000 m buffer layer. We also have to define how the two vector files should interact to decide which features get selected. In this case we select “intersect” – this will select all spatial features of the road network layer that intersect with the buffer polygon. Finally, we select “Creating new Selection” to cancel all eventually earlier performed selections within the road network layer. If we now press “Run” we should create a situation as shown in Figure 6. As you can see, all roads located within the buffer are now selected and hence marked with yellow colour.**
 
 ![Figure 5: The “Spatial query” dialogue.](Fig5_Tut6.png)
 
