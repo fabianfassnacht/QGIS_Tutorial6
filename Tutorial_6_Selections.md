@@ -68,13 +68,14 @@ An alternative to the just described work-flow of first selecting the Polygons w
 
 **selecting “Vector” -> “Geoprocessing Tools” -> “Clip” from the main menu of QGIS as shown in Figure 10. This will open the “Clip tool” shown in Figure 11. Here, we have to define the “Input Layer” from which we want to create a subset, and the “Clip Layer” which will be used to define the spatial area for which a subset of the “Input Layer” will be created. In our case the “gis.osm_roads_free_1” layer will be the “Input Layer” and the “Buffer layer” will be the Clip Layer. We additionally define an output name (“Clipped”) for the new Shapefile and press “Run”.** 
 
-Then a new Shapefile will be created. After rearranging the layers a bit and changing the visualization settings, it becomes clear that this process has led to almost the same results as the preceding workflow. In Figure 12, the two Shapefiles are positioned on top of each other with one of the two layers having an outline with a larger line width. You can see that the two Shapefiles extracted using the Buffer-Shapefile with two different approaches match perfectly within the buffer zone, but the result from the first procedure has some road segments that expand over the buffer zone. This is because in the first procedure we did not use the buffer to cut intersecting line segments but we selected the "complete" line segments which intersected in any popint with the buffer zone.
+Then a new Shapefile will be created. After rearranging the layers a bit and changing the visualization settings, it becomes clear that this process has led to almost the same results as the preceding workflow. In Figure 12, the two Shapefiles are positioned on top of each other with one of the two layers having an outline with a larger line width. You can see that the two Shapefiles extracted using the Buffer-Shapefile with two different approaches match perfectly within the buffer zone, but the result from the first procedure has some road segments that expand over the buffer zone. This is because in the first procedure we did not use the buffer to cut intersecting line segments but we selected the "complete" line segments which intersected in any point with the buffer zone.
 
 ![Figure 10: Opening the “Clip” tool.](Fig10_Tut6.png)
 
 ![Figure 11: The “Clip” tool dialogue.](Fig11_Tut6.png)
 
 ![Figure 12: The two extracted subsets of the road network using the buffer Shapefile match perfectly. One of the two subsets is displayed in a wide orange line, and the second subset in a more narrow red line.](Fig12_Tut6.png)
+
 ## 4 Performing a query on the attribute table
 We have now a Shapefile containing all roads that have been affected by the eruption of the vulcano. Now we would like to have a closer look at the road types that have been affected. To do this, we will first open the attribute table of one of the two Shapefiles containing only the roads located in the buffer zone. We open the attribute table by
 
@@ -88,11 +89,15 @@ So in the next step, we will create two more subsets from the Shapefile containi
 
 So let us first create a subset of all “secondary” roads. To do this, we
 
-**will perform a selection based on the fclass column using the tool “Select features using an expression” (marked with “1” in Figure 13). After clicking on the tool a new dialogue will appear which looks similar to the “Field calculator” we already got to know in Tutorial 5 (see Figure 14). With this tool, we can automatically select all features of the vector file that match a user–defined rule. In the given case we will set this rule to “fclass” = ’secondary’ as shown in 14. To enter this rule, we first open the menu called “Fields and Values” marked with “1” in Figure 14. Then we perform a double–click on the entry “fclass” as this is the column of the attribute table which we want to use to perform our selection. Now, “fclass” will appear in the “Expression” field on the left marked with “4”. To illustrate all unique entries of this column of the attribute table, we click the “all unique” button marked with “2”. Now all different classes listed in the ”fclass” column will appear. Next, we click the “=” sign marked with “3” and then we double–click the entry ’secondary’ marked with “5”. We then press “select” to query all entries of the attribute table and select all entries where our rule matches.**
+**will perform a selection based on the fclass column using the tool “Select features using an expression” (marked with “1” in Figure 13). After clicking on the tool a new dialogue will appear which looks similar to the “Field calculator” we already got to know in Tutorial 5 (see Figure 14). With this tool, we can automatically select all features of the vector file that match a user–defined rule. In the given case we will set this rule to “fclass” = ’secondary’ as shown in 14. To enter this rule, we first open the menu called “Fields and Values” marked with “1” in Figure 14. Then we perform a double–click on the entry “fclass” as this is the column of the attribute table which we want to use to perform our selection. Now, “fclass” will appear in the “Expression” field on the left marked with “4”. To illustrate all unique entries of this column of the attribute table, we click the “all unique” button marked with “2”. If the "All UNique" button is not shwoing, you might have to additionally press "Show Values"-button first.  Now all different classes listed in the ”fclass” column will appear. Next, we click the “=” sign marked with “3” and then we double–click the entry ’secondary’ marked with “5”. We then press “Select Features” to query all entries of the attribute table and select all entries where our rule matches.**
 
 ![Figure 14: The select features by expression tool.](Fig14_Tut6.png)
 
-As we can see from the results, there is only a single entry in the column “fclass” that belongs to the class “secondary”. This single spatial feature is a roundabout close to lower left border of the buffer zone (see Figure 15). As this is a rather small subset, we will try to additionally select all entries of the fclass column that belong to the class “tertiary” which is the next smaller category of roads. To do this,
+As we can see from the results, there is only a single entry in the column “fclass” that belongs to the class “secondary”. This single spatial feature is a roundabout close to lower left border of the buffer zone (see Figure 15). It might be hidden below the outline of the buffer polygon. You can for sure find it, if 
+
+**perform a right-click on the layer with the selected feature and use the "Zoom to Selection" option to zoom the current view to the selected polygon**
+
+As this is a rather small subset, we will try to additionally select all entries of the fclass column that belong to the class “tertiary” which is the next smaller category of roads. To do this,
 
 **we re–open the attribute table and the “Select features using an expression”. This time we will set the rule to “fclass” = ’secondary’ OR “fclass” = ’tertiary’ (see Figure 16). Then we press “select” and close the tool and the attribute table. The “OR” can either be directly typed into the ”Expression” field or it can be found from the menu “Operators”.**
 
@@ -102,7 +107,7 @@ As we can see from the results, there is only a single entry in the column “fc
 
 Now several more roads got selected as can be seen in Figure 17. We can now save this subset by
 
-**performing a right–click on the layer containing the spatial attributed located in the buffer zone and selecting “Save As...”. Then we select an Output filename, make sure that the option “Save only selected features” is activated and press “OK”.**
+**performing a right–click on the layer containing the spatial attributed located in the buffer zone and selecting "Export" -> “Save Features As...”. Then we select an Output filename, make sure that the option “Save only selected features” is activated and press “OK”. ALternatively, you can directly use the "Save Selected Features AS..." button then the "Save only selected features” button should already be activated **
 
 ![Figure 17: Spatial location of all “secondary” and “tertiary” roads within the buffer zone.](Fig17_Tut6.png)
 
@@ -117,6 +122,7 @@ With these settings a total of 109 spatial features gets selected (your total nu
 ![Figure 19: Locations of all spatial features containing the text–part “track” in their fclass label.](Fig19_Tut6.png)
 
 ![Figure 20: All classes containing the text–part “track” got selected in the attribute table.](Fig20_Tut6.png)
+
 ## 5 Exercise Tutorial 6
 To further practice the just learned skills, you should now complete the following exercises:
 
@@ -124,7 +130,7 @@ To further practice the just learned skills, you should now complete the followi
 
 (2) Create a subset of all spatial elements belonging to the class “residential” and having a length longer than 150 m.
 
-(3) Adapt the visualization of the two newly created subsets. All footway-elements should be in red colour and with a line width of 3; all residential-elements should be in green colour and with a line width of 5. Only the satellite image and the two newly created subsets should be active in the display.
+(3) Adapt the visualization of the two newly created subsets. All footway-elements should be in red colour and with a line width of 3 points; all residential-elements should be in green colour and with a line width of 5 points. Only the satellite image and the two newly created subsets should be active in the display.
 
 (4) Zoom to the buffer area and export the current view by selecting “Project” -> “Save as Image” from the main menu of QGIS. This will be the proof that you have completed this Tutorial.
 
