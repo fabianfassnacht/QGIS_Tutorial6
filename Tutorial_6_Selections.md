@@ -8,6 +8,8 @@ After completing this tutorial you will know how to perform a spatial selection 
 
 In this Tutorial we will a new Shapefile named **gis.osm_roads_free_1** that you can download here:
 
+https://drive.google.com/file/d/1Fl30MTA_4i9DguX9uP10_KGaqFCN0Bim/view?usp=share_link
+
 Don't forget to unzip the Shapefile.
 
 
